@@ -13,17 +13,32 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  */
 
 class Application {
+ 
+    public $route;
 
     public function __construct() {
         $this->prepareDatabase();
         $this->prepareView();
+        $this->route = new Route();
+        
     }
 
     /**
      * Start inicial da aplicacao.
      */
     public function run() {
-        echo Request::server('REQUEST_URI');
+        $class = $this->route->getClass(Route::actual());
+        $action = $this->route->getAction(Route::actual());
+        eval('$object = new App\\Controllers\\'.$class.'();');
+        self::showResult($object->$action());
+    }
+    
+    /**
+     * apresenta resultado do processamento.
+     */
+    protected static function showResult($result){
+        
+        echo $result;
     }
 
     /**

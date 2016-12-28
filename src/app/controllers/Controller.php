@@ -12,5 +12,7 @@ use Illuminate\Support\Facades\Auth;
  * @author marcelo
  */
 class Controller {
-    //put your code here
+    
+    
+    
 }

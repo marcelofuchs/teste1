@@ -8,24 +8,10 @@ namespace App;
  * @author marcelo
  */
 class Config {
-
+    
     public static function config() {
-        return [
-            'database' => [
-                'driver' => 'mysql',
-                'host' => 'localhost',
-                'database' => 'synus', //nome do seu banco de dados
-                'username' => 'user', //usuário do mysql
-                'password' => 'password', //senha do mysql
-                'charset' => 'utf8',
-                'collation' => 'utf8_unicode_ci',
-                'prefix' => ''
-            ],
-            'email' => [
-            ],
-            'cache' => [
-            ]
-        ];
+        global $config;
+        return $config;
     }
 
     public static function database($key = null, $default = null) {
