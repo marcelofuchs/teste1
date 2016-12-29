@@ -13,14 +13,12 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  */
 
 class Application {
- 
+
     public $route;
 
     public function __construct() {
         $this->prepareDatabase();
-        $this->prepareView();
         $this->route = new Route();
-        
     }
 
     /**
@@ -29,16 +27,18 @@ class Application {
     public function run() {
         $class = $this->route->getClass(Route::actual());
         $action = $this->route->getAction(Route::actual());
-        eval('$object = new App\\Controllers\\'.$class.'();');
+        eval('$object = new App\\Controllers\\' . $class . '();');
         self::showResult($object->$action());
     }
-    
+
     /**
      * apresenta resultado do processamento.
+     * @param mixed $result -  Resposta do controller
+     * @return boolean - resultado exibido.
      */
-    protected static function showResult($result){
-        
+    protected static function showResult($result) {
         echo $result;
+        return true;
     }
 
     /**
@@ -49,9 +49,4 @@ class Application {
         $capsule->addConnection(Config::database());
         $capsule->bootEloquent();
     }
-
-    protected function prepareView() {
-        
-    }
-
 }

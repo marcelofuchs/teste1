@@ -18,5 +18,9 @@ $GLOBALS['config'] =
             'email' => [
             ],
             'cache' => [
+            ],
+            'twig' => [
+                'viewPath' => 'app/views',
+                'compilationPath' => 'resource/compilation_cache'
             ]
         ];

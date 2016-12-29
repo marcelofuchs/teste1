@@ -7,7 +7,13 @@ namespace App\Controllers;
  * @author marcelo
  */
 class HomeController extends Controller {
+    
+    /**
+     * Página inicial do sistema.
+     * @return string Result
+     */
     public function index(){
-        return 'teste';
+        $nome = 'marcelo';
+        return $this->render('index.html', compact('nome'));
     }
 }

@@ -18,5 +18,10 @@ class Config {
         $config = self::config();
         return($key ? $config['database'][$key] : $config['database'] );
     }
+    
+    public static function twig($key = null, $default = null) {
+        $config = self::config();
+        return($key ? $config['twig'][$key] : $config['twig'] );
+    }
 
 }
