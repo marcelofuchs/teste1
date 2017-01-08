@@ -12,25 +12,53 @@ use App\Controllers\HomeController;
  */
 class Route {
 
-
+    /**
+     * Retorno da configuração de rotas.
+     * @global \App\type $routes
+     */
     public static function routes() {
         global $routes;
     }
 
-    public function getClass($route="/") {
+    /**
+     * Seleciona a classe que deve ser iniciada de acordo com a rota.
+     * @global type $routes
+     * @param type $route
+     * @return type
+     */
+    public function getClass($route = "/") {
         global $routes;
-        $var = explode("@", $routes[$route]);        
+        $var = explode("@", $routes[$route]);
         return $var[0];
     }
 
-    public function getAction($route="/") {
+    /**
+     * Método a ser executado de acordo com a rota.
+     * @global \App\type $routes
+     * @param type $route
+     * @return type
+     */
+    public function getAction($route = "/") {
         global $routes;
-        $var = explode("@", $routes[$route]);        
+        $var = explode("@", $routes[$route]);
         return $var[1];
     }
 
+    /**
+     * Retorna a rota atual.
+     * @return type
+     */
     public static function actual() {
         return Request::server('REQUEST_URI');
+    }
+
+    /**
+     * Redireciona para url.
+     * @param type $location - patch aplication
+     */
+    public static function redirect($location) {
+        header('Location: ' . $location);
+        exit;
     }
 
 }

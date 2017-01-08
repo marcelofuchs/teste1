@@ -4,6 +4,7 @@ namespace App;
 
 use App\Requests\Request;
 use App\Route;
+use App\Config;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 /*
@@ -17,6 +18,7 @@ class Application {
     public $route;
 
     public function __construct() {
+        Session::start();
         $this->prepareDatabase();
         $this->route = new Route();
     }
@@ -28,7 +30,17 @@ class Application {
         $class = $this->route->getClass(Route::actual());
         $action = $this->route->getAction(Route::actual());
         eval('$object = new App\\Controllers\\' . $class . '();');
+        if($object->middlewares){
+            $this->execMiddlewares($object->middlewares);
+        }
         self::showResult($object->$action());
+    }
+    
+    protected function execMiddlewares($arrMiddlewares){
+        foreach ($arrMiddlewares as $class){
+            eval('$mid = new App\\Middleware\\' . $class . '();');
+            $mid->run();
+        }
     }
 
     /**
@@ -47,6 +59,9 @@ class Application {
     protected function prepareDatabase() {
         $capsule = new Capsule;
         $capsule->addConnection(Config::database());
+        $capsule->setAsGlobal();
+        // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
         $capsule->bootEloquent();
     }
+
 }
